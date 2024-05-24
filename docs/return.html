@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retorno</title>
+</head>
+<body>
+    <h1>Retorno</h1>
+    <p>O token de acesso ao bitrix é esse:</p>
+    <p id="token"></p>
+
+    <script>
+        // Função para obter parâmetros da URL
+        function obterParametrosURL() {
+            var parametros = {};
+            var query = window.location.search.substring(1);
+            var pares = query.split("&");
+            for (var i = 0; i < pares.length; i++) {
+                var par = pares[i].split("=");
+                parametros[decodeURIComponent(par[0])] = decodeURIComponent(par[1]);
+            }
+            return parametros;
+        }
+
+        // Função para inserir parâmetros em um parágrafo
+        function inserirParametrosEmParagrafo() {
+            var parametros = obterParametrosURL();
+            var tokenParagrafo = document.getElementById("token");
+            for (var chave in parametros) {
+                if (parametros.hasOwnProperty(chave)) {
+                    tokenParagrafo.innerHTML += chave + ": " + parametros[chave] + "<br>";
+                }
+            }
+        }
+
+        // Chamar a função quando a página carregar
+        window.onload = inserirParametrosEmParagrafo;
+    </script>
+
+</body>
+</html>
