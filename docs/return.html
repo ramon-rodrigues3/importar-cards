@@ -11,6 +11,19 @@
     <p id="token"></p>
 
     <script>
+
+        function verificarAccessToken() {
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('access_token')) {
+                // Se o access_token estiver presente, exibir os parâmetros
+                inserirParametrosEmParagrafo();
+            } else if (urlParams.has('code')){
+                var code = urlParams.get('code');
+                abrirUrl(code);
+            }
+        }
+
+
         // Função para obter parâmetros da URL
         function obterParametrosURL() {
             var parametros = {};
@@ -34,9 +47,16 @@
             }
         }
 
-        // Chamar a função quando a página carregar
-        window.onload = inserirParametrosEmParagrafo;
-    </script>
+        function abrirUrl(code) {
+            var baseURL= "https://b24-27ilvk.bitrix24.com.br/oauth/token/?";
+            var params = new URLSearchParams("client_id=local.6650eaba506c15.97797448&grant_type=authorization_code&client_secret=B8TN2ZxXrRr0LM0Gtfqm9cmP3QqMV08tEb7S3H9lFluopaDMDa&redirect_uri=https://ramon-rodrigues3.github.io/importar-cards/return.html&code=xxxxxxxxxxxxxxxxxxxxxxxxxxxx&scope=user");
+            params.set('code', code);
+            var url = baseURL + params
+            window.open(url, '_self');
+        }
 
+        // Chamar a função quando a página carregar
+        window.onload = verificarAccessToken();
+    </script>
 </body>
 </html>
